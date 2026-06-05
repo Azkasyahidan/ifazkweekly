@@ -1,3 +1,11 @@
+<?php
+
+    require "fungsi.php";
+
+    $query = "SELECT * FROM MAHASISWA";
+    $mahasiswas = tampildata($query);
+    
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +15,7 @@
 </head>
 <body>
     <h1>INFORMATIKA 2026</h1>
-        <table border="1" cellspacing="0" cellpadding="10"px>
+        <table border="1" cellspacing="0" cellpadding="10px">
             <tr>
                 <td><a href="index.php">Home</a></td>
                 <td><a href="profile.php">Profile</a></td>
@@ -23,48 +31,42 @@
         </a>
         <table border="1" cellpadding="10px">
             <tr>
-                <th rowspan="2">No</th>
-                <th rowspan="2">Nama</th>
-                <th rowspan="2">Foto</th>
-                <th colspan="3">NILAI</th>
-            </tr>
+                <th>No</th>
+                <th>Nama</th>
+                <th>NIM</th>
+                <th>Jurusan</th>
+                <th>Email</th>
+                <th>No Hp</th>
+                <th>Foto</th>
+                <th>Aksi</th> </tr>
+            <?php
+                $no = 1; // Perbaikan: Nama variabel diganti huruf ($no), bukan angka ($1)
+                foreach($mahasiswas as $mhs) 
+                    {
+            ?>
             <tr>
-                <th>UTS</th>
-                <th>UAS</th>
-                <th>TUGAS</th>
+                <td align="center"><?= $no; ?></td>
+                <td><?php echo $mhs["nama"]; ?></td>
+                <td><?php echo $mhs["nim"]; ?></td>
+                <td><?php echo $mhs["jurusan"]; ?></td>
+                <td><?php echo $mhs["email"]; ?></td>
+                <td><?php echo $mhs["no_hp"]; ?></td>
+                <td>
+                    <img src="image/asets/<?php echo $mhs["foto"]; ?>" alt="foto" width="60px">
+                </td>
+                <td>
+                    <a href="editdata.php?id=<?php echo $mhs["id"]; ?>"><button>Edit</button></a> | 
+                    <a href="hapusdata.php?id=<?php echo $mhs["id"]; ?>"><button>Hapus</button></a>
+                </td> 
             </tr>
-            <tr>
-                <td>1</td>
-                <td>Resbob Mulyono</td>
-                <td><img src ="image/asets/jokowi.jpg" alt="foto"
-                Width="60px"></td>
-                <td align="center">90</td>
-                <td align="center">95</td>
-                <td align="center">98</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>CR7</td>
-                <td><img src ="image/asets/cr.jpg" alt="foto"
-                Width="60px"></td>
-                <td align="center">100</td>
-                <td align="center">100</td>
-                <td align="center">100</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Pessi</td>
-                <td><img src ="image/asets/messi.jpg" alt="foto"
-                Width="60px"></td>
-                <td align="center">50</td>
-                <td align="center">50</td>
-                <td align="center">50</td>
-            </tr>
+            <?php
+                $no++; // Angka naik otomatis 1, 2, 3...
+                } 
+            ?>
         </table>
-
         <br>
         <hr>
-        <h3>Table Mahasiswa</h>
+        <h3>Table Mahasiswa</h3>
         <table border="1" cellpadding="10px">
             <tr>
                 <td>1,1</td>
