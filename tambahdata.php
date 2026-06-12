@@ -1,3 +1,40 @@
+<?php
+
+    require "fungsi.php";
+
+    if(isset($_POST["Submit"]))
+    {
+        $nama = $_POST["nama"];
+        $nim = $_POST["nim"];
+        $jurusan = $_POST["jurusan"];
+        $email = $_POST["email"];
+        $nohp = $_POST["no_hp"];
+        $foto = $_POST["foto"];
+
+        $query ="INSERT INTO Mahasiswa
+        (nama,nim,jurusan,email,no_hp,foto) VALUES
+        ('$nama', '$nim', '$jurusan', '$email', '$nohp', '$foto')";
+
+        mysqli_query($koneksi, $query);
+
+        if(mysqli_affected_rows($koneksi) > 0)
+        {
+            echo "<script>
+                    alert('Data Berhasil Ditambahkan!!!');
+                    window.location.href='mahasiswa.php';
+                  </script>";
+        }
+        else
+        {
+            echo "<script>
+                    alert('Data Gagal Ditambahkan!!!');
+                    window.location.href='mahasiswa.php';
+                  </script>";
+        }
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,129 +44,42 @@
 </head>
 <body>
     <h2>Tambah Data Mahasiswa</h2>
-    <form action="mahasiswa.php" method="post">
-        <table>
-            <tr>
-                <td><label for="nama">Nama :</label></td>
-                <td></td>
-                <td><input type="text" id="nama" nama="nama" /></td>
-            </tr>
-            <tr>
-                <td><label for="photo">Photo :</label></td>
-                <td></td>
-                <td><input type="file" id="photo" nama="photo" /></td>
-            </tr>
-            <tr>
-                <td><label for="UTS">UTS :</label></td>
-                <td></td>
-                <td><input type="number" id="number" nama="UTS" /></td>
-            </tr>
-            <tr>
-                <td><label for="UAS">UAS :</label></td>
-                <td></td>
-                <td><input type="number" id="number" nama="UAS" /></td>
-            </tr>
-            <tr>
-                <td><label for="Tugas">Tugas :</label></td>
-                <td></td>
-                <td><input type="text" id="Tugas" nama="Tugas" /></td>
-            </tr>
-        </table>
-        <input type="submit" value="Submit">
-    </form>
-    <br>
-    <hr/>
     
-    <form action="mahasiswa.php" method="post">
+    <form action="" method="post">
         <table>
             <tr>
                 <td><label for="nama">Nama :</label></td>
-                <td></td>
-                <td><input type="text" id="nama" nama="nama" /></td>
-            </tr>
-            <tr>
-                <td><label for="NIM">NIM :</label></td>
-                <td></td>
-                <td><input type="number" id="number" nama="NIM" /></td>
-            </tr>
-            <tr>
-                <td><label for="Password">Password :</label></td>
-                <td></td>
-                <td><input type="password" id="password" nama="Pasword" /></td>
-            </tr>
-            <tr>
-                <td><label for="Email">Email :</label></td>
-                <td></td>
-                <td><input type="email" id="email" nama="Email" /></td>
-            </tr>
-            <tr>
-                <td><label for="No HP">No HP :</label></td>
-                <td></td>
-                <td><input type="tel" id="tel" nama="No HP" /></td>
-            </tr>
-            <tr>
-                <td><label for=Website Pribadi">Website Pribadi :</label></td>
-                <td></td>
-                <td><input type="url" id="url" nama="Website Pribadi" /></td>
-            </tr>
-            <tr>
-                <td><label for="Tanggal Lahir">Tanggal Lahir :</label></td>
-                <td></td>
-                <td><input type="date" id="date" nama="Tanggal Lahir" /></td>
-            </tr>
-            <tr>
-                <td><label for="Warna Favorite">Warna Favorite :</label></td>
-                <td></td>
-                <td><input type="color" id="color" nama="Warna Favorite" /></td>
-            </tr>
-            <tr>
-                <td><label for="Tingkat Kepuasan">Tingkat Kepuasan :</label></td>
-                <td></td>
-                <td><input type="range" id="range" nama="Tingkat Kepuasan" /></td>
-            </tr>
-            <tr>
-                <td><label>Jenis Kelamin</label></td>
                 <td>:</td>
-                <td>
-                    <input type="radio" id="laki" name="jenis_kelamin" value="Laki-laki">
-                    <label for="laki">Laki-laki</label>
-
-                    <input type="radio" id="perempuan" name="jenis_kelamin" value="Perempuan">
-                    <label for="perempuan">Perempuan</label>
-                </td>
+                <td><input type="text" id="nama" name="nama" required /></td>
             </tr>
             <tr>
-                <td><label>Hobi</label></td>
+                <td><label for="nim">NIM :</label></td>
                 <td>:</td>
-                <td>
-                    <input type="checkbox" id="Futsal" name="hobi[]" value="Futsal">
-                    <label for="Futsal">Futsal</label>
-
-                    <input type="checkbox" id="Renang" name="hobi[]" value="Renang">
-                    <label for="Renang">Renang</label>
-
-                    <input type="checkbox" id="Tennis" name="hobi[]" value="Tennis">
-                    <label for="Tennis">Tennis</label>
-                </td>
+                <td><input type="number" id="nim" name="nim" required /></td>
             </tr>
             <tr>
-                <td><label for="Photo">Photo :</label></td>
-                <td></td>
-                <td><input type="file" id="Photo" nama="Photo" /></td>
+                <td><label for="jurusan">Jurusan :</label></td>
+                <td>:</td>
+                <td><input type="text" id="jurusan" name="jurusan" required /></td>
             </tr>
             <tr>
-                <td><label for="Alamat">Alamat :</label></td>
-                <td></td>
-                <td><input type="textarea" id="textarea" nama="Alamat" /></td>
+                <td><label for="email">Email :</label></td>
+                <td>:</td>
+                <td><input type="email" id="email" name="email" /></td>
             </tr>
             <tr>
-                <td><label for="Jurusan">Jurusan :</label></td>
-                <td></td>
-                <td><input type="select option" id="select option" nama="Jurusan" /></td>
+                <td><label for="no_hp">No HP :</label></td>
+                <td>:</td>
+                <td><input type="number" id="no_hp" name="no_hp" /></td>
+            </tr>
+            <tr>
+                <td><label for="foto">Foto :</label></td>
+                <td>:</td>
+                <td><input type="text" id="foto" name="foto" /></td>
             </tr>
         </table>
-        <input type="submit" value="Submit">
+        <br>
+        <input type="submit" name="Submit" value="Submit">
     </form>
-
 </body>
 </html>
