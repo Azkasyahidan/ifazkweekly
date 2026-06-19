@@ -8,47 +8,78 @@ function tampildata($query)
 
     $result = mysqli_query($koneksi, $query);
 
-    $rows = []; 
-    while($row = mysqli_fetch_assoc($result))
-    {
+    $rows = [];
+    while ($row = mysqli_fetch_assoc($result)) {
         $rows[] = $row;
     }
 
     return $rows;
 }
 
-function tambahdata($data)
+function tambahdata($data, $files)
 {
     global $koneksi;
 
-    $nama = html.specialchars($_data["nama"]);
-    $nim = html.specialchars($_data["nim"]);
-    $jurusan = html.specialchars($_data["jurusan"]);
-    $email = html.specialchars9($_data["email"]);
-    $nohp = html.specialchars($_data["no_hp"]);
-    $foto = html.specialchars($_data["foto"]);
+    $nama = htmlspecialchars($data["nama"]);
+    $nim = htmlspecialchars($data["nim"]);
+    $jurusan = htmlspecialchars($data["jurusan"]);
+    $email = htmlspecialchars($data["email"]);
+    $nohp = htmlspecialchars($data["no_hp"]);
+    $foto = htmlspecialchars($data["foto"]);
 
-    $query ="INSERT INTO Mahasiswa
-        (nama,nim,jurusan,email,no_hp,foto) VALUES
-        ('$nama', '$nim', '$jurusan', '$email', '$nohp', '$foto')";
+    $namafoto = $files["name"];
+    $tmpfoto = $files["tmp_name"];
+    $date = date('dmY_His');
+    $newnamefoto = $date.$namafoto;
 
-    mysqli_query($koneksi,$query);
+    $path = "assets/images/";
+
+    if(move_upload_file($tmpfoto, $path))
+
+    $query = "INSERT INTO Mahasiswa
+              (nama, nim, jurusan, email, no_hp, foto)
+              VALUES
+              ('$nama', '$nim', '$jurusan', '$email', '$nohp', '$foto')";
+
+    mysqli_query($koneksi, $query);
 
     return mysqli_affected_rows($koneksi);
-
 }
-
 
 function hapusdata($id)
 {
     global $koneksi;
 
-    $query = "DELETE FROM Mahasiswa WHERE id=$id";
+    $query = "DELETE FROM Mahasiswa WHERE id = $id";
 
-    mysqli_query($koneksi,$query);
+    mysqli_query($koneksi, $query);
 
     return mysqli_affected_rows($koneksi);
 }
 
+function ubahdata($data, $id)
+{
+    global $koneksi;
+
+    $nama = htmlspecialchars($data["nama"]);
+    $nim = htmlspecialchars($data["nim"]);
+    $jurusan = htmlspecialchars($data["jurusan"]);
+    $email = htmlspecialchars($data["email"]);
+    $nohp = htmlspecialchars($data["no_hp"]);
+    $foto = htmlspecialchars($data["foto"]);
+
+    $query = "UPDATE Mahasiswa SET
+                nama = '$nama',
+                nim = '$nim',
+                jurusan = '$jurusan',
+                email = '$email',
+                no_hp = '$nohp',
+                foto = '$foto'
+              WHERE id = $id";
+
+    mysqli_query($koneksi, $query);
+
+    return mysqli_affected_rows($koneksi);
+}
 
 ?>

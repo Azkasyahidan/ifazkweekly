@@ -2,9 +2,16 @@
 
     require "fungsi.php";
 
+    $id = $_GET["id"];
+
+    $query = "SELECT * FROM Mahasiswa WHERE id=$id";
+
+    $mhs = tampildata($query)[0];
+
+    var_dump($mhs["nama"]);
+
     if(isset($_POST["Submit"]))
     {
-
         $nama = $_POST["nama"];
         $nim = $_POST["nim"];
         $jurusan = $_POST["jurusan"];
@@ -12,23 +19,17 @@
         $nohp = $_POST["no_hp"];
         $foto = $_POST["foto"];
 
-        $query ="INSERT INTO Mahasiswa
-        (nama,nim,jurusan,email,no_hp,foto) VALUES
-        ('$nama', '$nim', '$jurusan', '$email', '$nohp', '$foto')";
-
-        mysqli_query($koneksi, $query);
-
-        if(tambahdata($_POST, $FILES[]) > 0)
+        if(ubahdata($_POST, $id) > 0)
         {
             echo "<script>
-                    alert('Data Berhasil Ditambahkan!!!');
+                    alert('Data Berhasil Diubah!!!');
                     window.location.href='mahasiswa.php';
                   </script>";
         }
         else
         {
             echo "<script>
-                    alert('Data Gagal Ditambahkan!!!');
+                    alert('Data Gagal Diubah!!!');
                     window.location.href='mahasiswa.php';
                   </script>";
         }
@@ -41,42 +42,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Data Mahasiswa</title>
+    <title>Ubah Data Mahasiswa</title>
 </head>
 <body>
-    <h2>Tambah Data Mahasiswa</h2>
+    <h2>Ubah Data Mahasiswa</h2>
     
-    <form action="" method="post" anctype="multipart/form.data>
+    <form action="" method="post">
         <table>
             <tr>
                 <td><label for="nama">Nama :</label></td>
                 <td>:</td>
-                <td><input type="text" id="nama" name="nama" required /></td>
+                <td><input type="text" id="nama" name="nama" required
+                value="<?= $mhs["nama"]?>" /></td>
             </tr>
             <tr>
                 <td><label for="nim">NIM :</label></td>
                 <td>:</td>
-                <td><input type="number" id="nim" name="nim" required /></td>
+                <td><input type="number" id="nim" name="nim" required 
+                value="<?= $mhs["nim"]?>"/></td>
             </tr>
             <tr>
                 <td><label for="jurusan">Jurusan :</label></td>
                 <td>:</td>
-                <td><input type="text" id="jurusan" name="jurusan" required /></td>
+                <td><input type="text" id="jurusan" name="jurusan" required
+                value="<?= $mhs["jurusan"]?>" /></td>
             </tr>
             <tr>
                 <td><label for="email">Email :</label></td>
                 <td>:</td>
-                <td><input type="email" id="email" name="email" /></td>
+                <td><input type="email" id="email" name="email" required
+                value="<?= $mhs["email"]?>" /></td>
             </tr>
             <tr>
                 <td><label for="no_hp">No HP :</label></td>
                 <td>:</td>
-                <td><input type="number" id="no_hp" name="no_hp" /></td>
+                <td><input type="number" id="no_hp" name="no_hp" required
+                value="<?= $mhs["no_hp"]?>" /></td>
             </tr>
             <tr>
                 <td><label for="foto">Foto :</label></td>
                 <td>:</td>
-                <td><input type="file" id="foto" name="foto" /></td>
+                <td><input type="text" id="foto" name="foto" required
+                value="<?= $mhs["foto"]?>" /></td>
             </tr>
         </table>
         <br>

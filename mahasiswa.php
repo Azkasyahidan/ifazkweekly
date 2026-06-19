@@ -55,7 +55,7 @@
                     <img src="image/asets/<?php echo $mhs["foto"]; ?>" alt="foto" width="60px">
                 </td>
                 <td>
-                    <a href="editdata.php?id=<?php echo $mhs["id"]; ?>"><button>Edit</button></a> | 
+                    <a href="ubahdata.php?id=<?php echo $mhs["id"]; ?>"><button>Edit</button></a> | 
                     <a href="hapusdata.php?id=<?php echo $mhs["id"]; ?>" onclick="return confirm('Anda Yakin')" ><button>Hapus</button></a>
                 </td> 
             </tr>
