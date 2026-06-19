@@ -8,8 +8,6 @@
 
     $mhs = tampildata($query)[0];
 
-    var_dump($mhs["nama"]);
-
     if(isset($_POST["Submit"]))
     {
         $nama = $_POST["nama"];
@@ -47,8 +45,7 @@
 <body>
     <h2>Ubah Data Mahasiswa</h2>
     
-    <form action="" method="post">
-        <table>
+    <form action="" method="post" enctype="multipart/form-data">        <table>
             <tr>
                 <td><label for="nama">Nama :</label></td>
                 <td>:</td>
@@ -82,7 +79,7 @@
             <tr>
                 <td><label for="foto">Foto :</label></td>
                 <td>:</td>
-                <td><input type="text" id="foto" name="foto" required
+                <td><input type="file" id="foto" name="foto" required
                 value="<?= $mhs["foto"]?>" /></td>
             </tr>
         </table>

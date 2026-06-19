@@ -25,25 +25,44 @@ function tambahdata($data, $files)
     $jurusan = htmlspecialchars($data["jurusan"]);
     $email = htmlspecialchars($data["email"]);
     $nohp = htmlspecialchars($data["no_hp"]);
-    $foto = htmlspecialchars($data["foto"]);
+    
+    // --- 1. VALIDASI: Cek apakah NIM sudah terdaftar ---
+    $cek_nim = mysqli_query($koneksi, "SELECT nim FROM Mahasiswa WHERE nim = '$nim'");
+    if (mysqli_num_rows($cek_nim) > 0) {
+        echo "<script>
+                alert('Gagal: NIM $nim sudah terdaftar di database!');
+              </script>";
+        return 0; // Hentikan fungsi dan kembalikan nilai 0 (gagal)
+    }
+    // ----------------------------------------------------
 
-    $namafoto = $files["name"];
-    $tmpfoto = $files["tmp_name"];
+    $namafoto = $files["foto"]["name"];
+    $tmpfoto = $files["foto"]["tmp_name"];
+    
     $date = date('dmY_His');
-    $newnamefoto = $date.$namafoto;
+    $newnamefoto = $date . "_" . $namafoto;
 
-    $path = "assets/images/";
+    $path = "image/asets/" . $newnamefoto;
 
-    if(move_upload_file($tmpfoto, $path))
+    if(move_uploaded_file($tmpfoto, $path))
+    {
+        $query = "INSERT INTO Mahasiswa
+                (nama, nim, jurusan, email, no_hp, foto)
+                VALUES
+                ('$nama', '$nim', '$jurusan', '$email', '$nohp', '$newnamefoto')";
 
-    $query = "INSERT INTO Mahasiswa
-              (nama, nim, jurusan, email, no_hp, foto)
-              VALUES
-              ('$nama', '$nim', '$jurusan', '$email', '$nohp', '$foto')";
+        $eksekusi = mysqli_query($koneksi, $query);
 
-    mysqli_query($koneksi, $query);
+        // JIKA QUERY DATABASE GAGAL:
+        if(!$eksekusi) {
+            die("Error Database: " . mysqli_error($koneksi));
+        }
 
-    return mysqli_affected_rows($koneksi);
+        return mysqli_affected_rows($koneksi);
+    } else {
+        // JIKA GAGAL KARENA FOLDER/FILE UPLOAD:
+        die("Gagal mengupload gambar. Periksa apakah folder 'image/asets/' sudah ada dan bisa ditulis.");
+    }
 }
 
 function hapusdata($id)

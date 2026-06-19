@@ -5,7 +5,7 @@
         <title>
             INFORMATIKA 2026
         </title>
-        <link rel="stylesheet" href="image/asets/style.css">
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <h1>INFORMATIKA 2026</h1>

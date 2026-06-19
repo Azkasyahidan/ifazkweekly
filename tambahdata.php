@@ -10,15 +10,9 @@
         $jurusan = $_POST["jurusan"];
         $email = $_POST["email"];
         $nohp = $_POST["no_hp"];
-        $foto = $_POST["foto"];
+        $foto = $_FILES['foto']['name'];
 
-        $query ="INSERT INTO Mahasiswa
-        (nama,nim,jurusan,email,no_hp,foto) VALUES
-        ('$nama', '$nim', '$jurusan', '$email', '$nohp', '$foto')";
-
-        mysqli_query($koneksi, $query);
-
-        if(tambahdata($_POST, $FILES[]) > 0)
+        if(tambahdata($_POST, $files[]) > 0)
         {
             echo "<script>
                     alert('Data Berhasil Ditambahkan!!!');
@@ -46,8 +40,7 @@
 <body>
     <h2>Tambah Data Mahasiswa</h2>
     
-    <form action="" method="post" anctype="multipart/form.data>
-        <table>
+    <form action="" method="post" enctype="multipart/form-data">        <table>
             <tr>
                 <td><label for="nama">Nama :</label></td>
                 <td>:</td>
@@ -80,7 +73,7 @@
             </tr>
         </table>
         <br>
-        <input type="submit" name="Submit" value="Submit">
+        <input type="file" id="foto" name="foto" />
     </form>
 </body>
 </html>
