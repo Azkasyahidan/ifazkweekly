@@ -152,4 +152,31 @@ function ubahdata($data, $id, $files = null)
     return mysqli_stmt_affected_rows($stmt);
 }
 
+function register($data)
+{
+    global $koneksi;
+
+    $username = stripslashes($data["username"]);
+    $password1 = mysqli_real_escape_string($koneksi,$data["password1"]);
+    $password2 = mysqli_real_escape_string($koneksi,$data["password2"]);
+
+    if($password1 != $password2)
+    {
+        echo "<script>
+                    alert('Konfirmasi Password Tiadak sesuai');
+                </script>
+            ";
+        return false;
+    }
+
+    ////enkripsi password
+    $password_hash = password_hash($password1, PASSWORD_DEFAULT);
+
+    $query = "INSERT INTO user (username,password) VALUES('$username','$password_hash')";
+
+    mysqli_query($koneksi,$query);
+
+    return mysqli_affected_rows($koneksi);
+}
+
 ?>
